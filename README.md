@@ -1,4 +1,4 @@
-## こんにちは 👋
+## さて、こんにちは！ 👋
 
 <div align="center">
   <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ2xzb20xZnhiazBpdTRlZXg3aXpoN3ZpazBsZHprd2J6OWdqbjZkdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Dh5q0sShxgp13DwrvG/giphy.gif" alt="Coding GIF" />
@@ -6,14 +6,12 @@
 
 <div align="center">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=ts,react,nextjs,nodejs,nestjs,mongodb,tailwind,python,cpp&theme=dark&perline=3" />
+    <img src="https://skillicons.dev/icons?i=ts,react,nextjs,nodejs,nestjs,mongodb,tailwind,python,go,cpp&theme=dark&perline=3" />
   </a>
 </div>
 
 ---
 
-
-## さて、こんにちは！
 
 ---
 
