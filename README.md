@@ -1,7 +1,7 @@
 ## こんにちは 👋
 
 <div align="center">
-  <img src="https://i.imgur.com/jx17aHT.gif" alt="Maurice Moss from IT Crowd" />
+  <div style="width:100%;height:0;padding-bottom:62%;position:relative;"><iframe src="https://giphy.com/embed/Dh5q0sShxgp13DwrvG" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/scaler-official-dogs-computer-typing-Dh5q0sShxgp13DwrvG">via GIPHY</a></p>
 </div>
 
 <div align="center">
@@ -36,4 +36,3 @@
 <img align="left" alt="Bash" width="30px" style="padding-right:10px;" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" />
 <br />
 
-[youtube]: https://www.youtube.com/c/fknight
