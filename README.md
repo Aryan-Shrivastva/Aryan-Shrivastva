@@ -14,12 +14,14 @@
 </br>
 
 
-
-<div align="center">
+## 技術スタック 🛠
+<div align="left">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=cpp,ts,react,js,nextjs,nodejs,nestjs,mongodb,tailwind,python,go,rust,docker,flutter,vue,clojure,git,github,linux&theme=dark&perline=3" />
+    <img src="https://skillicons.dev/icons?i=cpp,ts,react,js,nextjs,nodejs,nestjs,mongodb,tailwind,python,go,rust,docker,flutter,vue,clojure,git,github,linux&theme=dark&perline=5" />
   </a>
 </div>
+
+</br>
 
 
 
