@@ -1,7 +1,7 @@
 ## こんにちは 👋
 
 <div align="center">
-  <div style="width:100%;height:0;padding-bottom:62%;position:relative;"><iframe src="https://giphy.com/embed/Dh5q0sShxgp13DwrvG" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/scaler-official-dogs-computer-typing-Dh5q0sShxgp13DwrvG">via GIPHY</a></p>
+  <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ2xzb20xZnhiazBpdTRlZXg3aXpoN3ZpazBsZHprd2J6OWdqbjZkdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Dh5q0sShxgp13DwrvG/giphy.gif" alt="Coding GIF" />
 </div>
 
 <div align="center">
