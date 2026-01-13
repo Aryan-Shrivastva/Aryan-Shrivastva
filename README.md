@@ -1,8 +1,19 @@
 ## さて、こんにちは！ 👋
 
 <div align="center">
-  <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ2xzb20xZnhiazBpdTRlZXg3aXpoN3ZpazBsZHprd2J6OWdqbjZkdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Dh5q0sShxgp13DwrvG/giphy.gif" alt="Coding GIF" />
+  <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3J0dDhmN3VmMXhqbnB1Y2hxYzVrMGJtaW4zZHZiM3dyc2hkODZvMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GhdvN4hYZikziWCs6R/giphy.gif" alt="Coding GIF" />
+  
 </div>
+
+# 私について 💬
+
+- Software 𝙳𝚎𝚟𝚎𝚕𝚘𝚙𝚎𝚛 
+- !(コードを書くのが好き)
+- ハミルトンが勝利
+
+</br>
+
+
 
 <div align="center">
   <a href="https://skillicons.dev">
@@ -10,10 +21,6 @@
   </a>
 </div>
 
----
-
-
----
 
 ### 🧰 Languages and Tools
 
