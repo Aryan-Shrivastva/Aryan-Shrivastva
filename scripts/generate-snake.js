@@ -10,7 +10,8 @@ const path = require('path');
 // ============================================================
 
 const LEETCODE_USERNAME = process.env.LEETCODE_USERNAME || process.argv[2] || 'AryannnnnnShrivastva';
-const OUTPUT_PATH = process.env.OUTPUT_PATH || process.argv[3] || path.join(__dirname, '..', 'dist', 'leetcode-snake.svg');
+const OUTPUT_SNAKE_PATH = process.env.OUTPUT_SNAKE_PATH || path.join(__dirname, '..', 'dist', 'leetcode-snake.svg');
+const OUTPUT_STATS_PATH = process.env.OUTPUT_STATS_PATH || path.join(__dirname, '..', 'dist', 'leetcode-stats.svg');
 
 // Theme settings (Blue/purple palette)
 const PALETTE = {
@@ -44,7 +45,7 @@ const PADDING = { left: 16, top: 32, right: 16, bottom: 24 };
 function fetchLeetCodeData(username) {
   return new Promise((resolve, reject) => {
     const payload = JSON.stringify({
-      query: `query userProfileCalendar($username: String!, $year: Int) {
+      query: `query getLeetcodeStats($username: String!, $year: Int) {
         matchedUser(username: $username) {
           userCalendar(year: $year) {
             activeYears
@@ -52,6 +53,16 @@ function fetchLeetCodeData(username) {
             totalActiveDays
             submissionCalendar
           }
+          badges {
+            displayName
+            creationDate
+          }
+        }
+        userContestRanking(username: $username) {
+          attendedContestsCount
+          rating
+          globalRanking
+          topPercentage
         }
       }`,
       variables: { username }
@@ -74,11 +85,15 @@ function fetchLeetCodeData(username) {
       res.on('end', () => {
         try {
           const data = JSON.parse(body);
-          if (!data.data?.matchedUser?.userCalendar) {
+          if (!data.data?.matchedUser) {
             reject(new Error(`User "${username}" not found or API error. Response: ${body.slice(0, 300)}`));
             return;
           }
-          resolve(data.data.matchedUser.userCalendar);
+          resolve({
+            calendar: data.data.matchedUser.userCalendar,
+            badges: data.data.matchedUser.badges,
+            contest: data.data.userContestRanking
+          });
         } catch (e) {
           reject(new Error(`Failed to parse LeetCode response: ${e.message}`));
         }
@@ -186,7 +201,6 @@ function getFallbackMove(head, body, rows, cols) {
 }
 
 function runSnakeSimulation(grid) {
-  // Extract food coordinates
   const food = [];
   for (let r = 0; r < GRID_ROWS; r++) {
     for (let c = 0; c < GRID_COLS; c++) {
@@ -196,7 +210,6 @@ function runSnakeSimulation(grid) {
     }
   }
 
-  // Initial snake: 5 segments starting at (0,0)
   let snake = [];
   for (let i = 0; i < SNAKE_LENGTH; i++) {
     snake.push({ row: 0, col: 0 });
@@ -204,8 +217,6 @@ function runSnakeSimulation(grid) {
 
   const remainingFood = [...food];
   const history = [snake.map(p => ({...p}))];
-  
-  // Track when each food is eaten
   const eatenTicks = {};
 
   let steps = 0;
@@ -215,7 +226,6 @@ function runSnakeSimulation(grid) {
     steps++;
     const head = snake[0];
 
-    // Find closest food
     let closestFood = null;
     let minDist = Infinity;
     let closestIdx = -1;
@@ -231,7 +241,6 @@ function runSnakeSimulation(grid) {
 
     let pathSteps = bfs(head, closestFood, snake, GRID_ROWS, GRID_COLS);
 
-    // If target blocked, find path to any reachable food
     if (!pathSteps) {
       for (let i = 0; i < remainingFood.length; i++) {
         pathSteps = bfs(head, remainingFood[i], snake, GRID_ROWS, GRID_COLS);
@@ -263,7 +272,6 @@ function runSnakeSimulation(grid) {
     }
   }
 
-  // Crawl off screen to the right
   while (snake[0].col < GRID_COLS + SNAKE_LENGTH && steps < maxSteps) {
     steps++;
     const head = snake[0];
@@ -288,7 +296,7 @@ function runSnakeSimulation(grid) {
 }
 
 // ============================================================
-// SVG Generator with Keyframe Animation Timeline
+// SVG Generators
 // ============================================================
 
 function toId(r, c) {
@@ -299,7 +307,6 @@ function generateAnimatedSVG(grid, history, eatenTicks, username) {
   const totalTicks = history.length;
   const stepPct = 100 / totalTicks;
   
-  // Dimensions
   const contentW = GRID_COLS * CELL_PITCH - CELL_GAP;
   const contentH = GRID_ROWS * CELL_PITCH - CELL_GAP;
   const viewW = contentW + PADDING.left + PADDING.right;
@@ -314,7 +321,6 @@ function generateAnimatedSVG(grid, history, eatenTicks, username) {
   css += `.c{shape-rendering:geometricPrecision;stroke-width:1px;stroke:var(--cb);width:${CELL_SIZE}px;height:${CELL_SIZE}px}\n`;
   css += `.u{transform-origin:0 0;transform:scale(0,1);animation:u0 ${ANIMATION_DURATION_MS}ms linear infinite}\n`;
 
-  // Generate individual keyframes for cells
   for (let r = 0; r < GRID_ROWS; r++) {
     for (let c = 0; c < GRID_COLS; c++) {
       const initialVal = grid[r][c];
@@ -323,7 +329,6 @@ function generateAnimatedSVG(grid, history, eatenTicks, username) {
       const foodKey = `${r},${c}`;
       const eatenAt = eatenTicks[foodKey] !== undefined ? eatenTicks[foodKey] : Infinity;
 
-      // Build timeline of states
       const timeline = [];
       let prevColor = null;
 
@@ -333,11 +338,11 @@ function generateAnimatedSVG(grid, history, eatenTicks, username) {
 
         let color;
         if (snakeIndex === 0) {
-          color = 'var(--csh)'; // Snake Head
+          color = 'var(--csh)';
         } else if (snakeIndex > 0) {
-          color = 'var(--csb)'; // Snake Body
+          color = 'var(--csb)';
         } else {
-          color = t < eatenAt ? initialColor : 'var(--c0)'; // Contribution color if not eaten yet, otherwise empty
+          color = t < eatenAt ? initialColor : 'var(--c0)';
         }
 
         if (color !== prevColor) {
@@ -346,19 +351,16 @@ function generateAnimatedSVG(grid, history, eatenTicks, username) {
         }
       }
 
-      // If never visited and it's empty, we don't need keyframes
       if (timeline.length === 1 && initialVal === 0) {
         css += `.c.${id}{fill:var(--c0)}\n`;
         continue;
       }
 
-      // Generate keyframe CSS
       css += `@keyframes k_${id}{`;
       for (let i = 0; i < timeline.length; i++) {
         const { tick, color } = timeline[i];
         const pct = (tick * stepPct).toFixed(2);
         
-        // Add a flat step transition to prevent interpolation gradients
         if (i > 0) {
           const prevPct = ((tick - 0.05) * stepPct).toFixed(2);
           css += `${prevPct}%{fill:${timeline[i - 1].color}}`;
@@ -372,7 +374,6 @@ function generateAnimatedSVG(grid, history, eatenTicks, username) {
     }
   }
 
-  // Progress bar animation
   let uKf = '@keyframes u0{';
   const pSteps = 40;
   for (let i = 0; i <= pSteps; i++) {
@@ -383,7 +384,6 @@ function generateAnimatedSVG(grid, history, eatenTicks, username) {
   uKf += '}\n';
   css += uKf;
 
-  // Build SVG content
   let els = '';
   els += `<rect x="0" y="0" width="${viewW}" height="${viewH}" fill="${PALETTE.background}" rx="6"/>\n`;
 
@@ -405,26 +405,110 @@ ${css}</style>
 ${els}</svg>`;
 }
 
+// Stats Card SVG Generator
+function generateStatsSVG(stats) {
+  const submissions = stats.submissions || 0;
+  const activeDays = stats.activeDays || 0;
+  const rating = Math.round(stats.rating || 0);
+  const topPercentage = stats.topPercentage !== undefined ? stats.topPercentage : '0.0';
+  const badgesCount = stats.badgesCount || 0;
+  const recentBadge = stats.recentBadge || 'None';
+
+  return `<svg width="490" height="195" viewBox="0 0 490 195" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <style>
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-weight: 700; font-size: 28px; fill: #a78bfa; text-anchor: middle; }
+      .label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-weight: 600; font-size: 13px; fill: #c9d1d9; text-anchor: middle; }
+      .sublabel { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-weight: 400; font-size: 11px; fill: #8b949e; text-anchor: middle; }
+      .sublabel-highlight { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-weight: 700; font-size: 11px; fill: #60a5fa; text-anchor: middle; }
+      .rating-val { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-weight: 700; font-size: 19px; fill: #ffffff; text-anchor: middle; }
+      .separator { stroke: #30363d; stroke-width: 1; }
+    </style>
+
+    <!-- Background card -->
+    <rect width="490" height="195" rx="8" fill="#0d1117" stroke="#1f2937" stroke-width="1.5"/>
+
+    <!-- Left Column (Submissions) -->
+    <text x="90" y="95" class="title">${submissions.toLocaleString()}</text>
+    <text x="90" y="125" class="label">Total Submissions</text>
+    <text x="90" y="148" class="sublabel">Active Days: ${activeDays}</text>
+
+    <!-- Column Separators -->
+    <line x1="172" y1="35" x2="172" y2="160" class="separator" />
+    <line x1="318" y1="35" x2="318" y2="160" class="separator" />
+
+    <!-- Center Column (Contest Rating) -->
+    <!-- Progress Ring -->
+    <circle cx="245" cy="85" r="28" fill="none" stroke="#223049" stroke-width="4.5"/>
+    <circle cx="245" cy="85" r="28" fill="none" stroke="#60a5fa" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="145 30" transform="rotate(-110 245 85)"/>
+    
+    <!-- Flame Icon -->
+    <g transform="translate(237, 44)">
+      <path d="M8 0C3 3 1.5 6 1.5 9.5C1.5 13.5 4.5 16 8 16C11.5 16 14.5 13.5 14.5 9.5C14.5 5 11 2 8 0ZM8 13C6.3 13 5 11.7 5 10C5 8.9 5.8 7.4 7.2 6.3C7.6 6 8.4 6 8.8 6.3C10.2 7.4 11 8.9 11 10C11 11.7 9.7 13 8 13Z" fill="#ffb020"/>
+    </g>
+
+    <text x="245" y="91" class="rating-val">${rating}</text>
+    <text x="245" y="125" class="label">Contest Rating</text>
+    <text x="245" y="148" class="sublabel-highlight">Top ${topPercentage}%</text>
+
+    <!-- Right Column (Badges) -->
+    <text x="400" y="95" class="title">${badgesCount}</text>
+    <text x="400" y="125" class="label">Badges Earned</text>
+    <text x="400" y="148" class="sublabel" clip-path="url(#badge-clip)">${recentBadge}</text>
+
+    <!-- Clip path to prevent long badge names from overflowing -->
+    <clipPath id="badge-clip">
+      <rect x="325" y="135" width="150" height="25"/>
+    </clipPath>
+  </svg>`;
+}
+
 // ============================================================
 // Main Execution
 // ============================================================
 
 async function main() {
-  console.log(`\n🐍 LeetCode Snake Generator`);
+  console.log(`\n🐍 LeetCode Snake & Stats Generator`);
   console.log(`   Username: ${LEETCODE_USERNAME}`);
-  console.log(`   Output:   ${OUTPUT_PATH}\n`);
+  console.log(`   Snake Out: ${OUTPUT_SNAKE_PATH}`);
+  console.log(`   Stats Out: ${OUTPUT_STATS_PATH}\n`);
 
   console.log('📡 Fetching LeetCode data...');
-  let calendarData;
+  let res;
   try {
-    calendarData = await fetchLeetCodeData(LEETCODE_USERNAME);
-    console.log(`   ✅ Streak: ${calendarData.streak}`);
-    console.log(`   ✅ Active days: ${calendarData.totalActiveDays}`);
+    res = await fetchLeetCodeData(LEETCODE_USERNAME);
   } catch (err) {
     console.error(`   ❌ ${err.message}`);
     process.exit(1);
   }
 
+  const calendarData = res.calendar;
+  const badgesData = res.badges || [];
+  const contestData = res.contest || {};
+
+  // Sum up all submissions in the calendar
+  let totalSubmissions = 0;
+  try {
+    const calendar = JSON.parse(calendarData.submissionCalendar);
+    totalSubmissions = Object.values(calendar).reduce((sum, count) => sum + count, 0);
+  } catch (e) {
+    console.warn('   ⚠️ Could not compute total submissions');
+  }
+
+  // Get most recent badge
+  let recentBadgeName = 'None';
+  if (badgesData.length > 0) {
+    // Sort badges by creationDate descending if possible, or take the first one
+    const sorted = [...badgesData].sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
+    recentBadgeName = sorted[0].displayName;
+  }
+
+  console.log(`   ✅ Total Submissions (past year): ${totalSubmissions}`);
+  console.log(`   ✅ Active days: ${calendarData.totalActiveDays}`);
+  console.log(`   ✅ Contest Rating: ${contestData.rating ? Math.round(contestData.rating) : 'N/A'}`);
+  console.log(`   ✅ Top Percentile: ${contestData.topPercentage !== undefined ? contestData.topPercentage + '%' : 'N/A'}`);
+  console.log(`   ✅ Badges count: ${badgesData.length} (Recent: ${recentBadgeName})`);
+
+  // 1. Generate Snake Game SVG
   console.log('\n📊 Building contribution grid...');
   const grid = buildContributionGrid(calendarData.submissionCalendar);
   const activeCells = grid.flat().filter(v => v > 0).length;
@@ -434,16 +518,34 @@ async function main() {
   const { history, eatenTicks } = runSnakeSimulation(grid);
   console.log(`   ✅ Snake simulation finished in ${history.length} ticks`);
 
-  console.log('\n🎨 Generating animated SVG...');
-  const svg = generateAnimatedSVG(grid, history, eatenTicks, LEETCODE_USERNAME);
-  console.log(`   ✅ SVG size: ${(Buffer.byteLength(svg) / 1024).toFixed(1)} KB`);
+  console.log('\n🎨 Generating animated Snake SVG...');
+  const snakeSvg = generateAnimatedSVG(grid, history, eatenTicks, LEETCODE_USERNAME);
+  console.log(`   ✅ Snake SVG size: ${(Buffer.byteLength(snakeSvg) / 1024).toFixed(1)} KB`);
 
-  const outputDir = path.dirname(OUTPUT_PATH);
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
-  }
-  fs.writeFileSync(OUTPUT_PATH, svg);
-  console.log(`\n✅ Success! Snake SVG → ${OUTPUT_PATH}\n`);
+  // 2. Generate Stats SVG
+  console.log('\n🎨 Generating Stats Card SVG...');
+  const statsSvg = generateStatsSVG({
+    submissions: totalSubmissions,
+    activeDays: calendarData.totalActiveDays,
+    rating: contestData.rating,
+    topPercentage: contestData.topPercentage,
+    badgesCount: badgesData.length,
+    recentBadge: recentBadgeName
+  });
+  console.log(`   ✅ Stats SVG size: ${(Buffer.byteLength(statsSvg) / 1024).toFixed(1)} KB`);
+
+  // Write SVGs to output directories
+  const snakeDir = path.dirname(OUTPUT_SNAKE_PATH);
+  if (!fs.existsSync(snakeDir)) fs.mkdirSync(snakeDir, { recursive: true });
+  fs.writeFileSync(OUTPUT_SNAKE_PATH, snakeSvg);
+  console.log(`   💾 Snake SVG saved to ${OUTPUT_SNAKE_PATH}`);
+
+  const statsDir = path.dirname(OUTPUT_STATS_PATH);
+  if (!fs.existsSync(statsDir)) fs.mkdirSync(statsDir, { recursive: true });
+  fs.writeFileSync(OUTPUT_STATS_PATH, statsSvg);
+  console.log(`   💾 Stats SVG saved to ${OUTPUT_STATS_PATH}`);
+
+  console.log(`\n✅ Success! All SVGs generated successfully.\n`);
 }
 
 main().catch(err => {

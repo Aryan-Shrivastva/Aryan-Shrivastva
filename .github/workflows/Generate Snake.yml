@@ -39,4 +39,4 @@ jobs:
         with:
           default_author: github_actions
           message: "Generate LeetCode Snake"
-          add: "dist/leetcode-snake.svg"
+          add: "dist/*"
