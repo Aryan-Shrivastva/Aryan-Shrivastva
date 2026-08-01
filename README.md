@@ -26,9 +26,13 @@
 ## 📊 My LeetCode Stats & Activity
 
 <div align="center">
-  <img src="./dist/leetcode-stats.svg" alt="LeetCode Stats" />
+  <a href="https://leetcode.com/u/AryannnnnnShrivastva/" target="_blank">
+    <img src="./dist/leetcode-stats.svg" alt="LeetCode Stats" />
+  </a>
   <br/><br/>
-  <img src="./dist/leetcode-snake.svg" alt="LeetCode Snake eating my contribution grid" stroke-width="1.5" />
+  <a href="https://leetcode.com/u/AryannnnnnShrivastva/" target="_blank">
+    <img src="./dist/leetcode-snake.svg" alt="LeetCode Snake eating my contribution grid" stroke-width="1.5" />
+  </a>
 </div>
 
 </br>
