@@ -23,6 +23,11 @@
 
 </br>
 
+## 🐍 My LeetCode Contribution Grid
 
+<div align="center">
+  <img src="./dist/leetcode-snake.svg" alt="LeetCode Snake eating my contribution grid" />
+</div>
 
+</br>
 
