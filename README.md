@@ -23,7 +23,7 @@
 
 </br>
 
-## 📊 My LeetCode Stats & Activity
+## <img src="./dist/leetcode-logo.svg" width="22" height="22" valign="middle" /> LeetCodeの統計とアクティビティ
 
 <div align="center">
   <a href="https://leetcode.com/u/AryannnnnnShrivastva/" target="_blank">
