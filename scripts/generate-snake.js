@@ -35,7 +35,7 @@ const CELL_PITCH = CELL_SIZE + CELL_GAP;
 const GRID_COLS = 52;
 const GRID_ROWS = 7;
 const SNAKE_LENGTH = 5;
-const ANIMATION_DURATION_MS = 13000; // 13 seconds total duration (10fps smooth animation speed)
+const ANIMATION_DURATION_MS = 24000; // 24 seconds total duration for full grid clearing
 const PADDING = { left: 16, top: 32, right: 16, bottom: 24 };
 
 // ============================================================
@@ -216,16 +216,14 @@ function getFallbackMove(head, body, rows, cols) {
 }
 
 function runSnakeSimulation(grid) {
-  // Collect 1 key target cell per active column for a smooth, readable path
-  const targets = [];
+  // Group ALL active cells by column (0..51) to ensure 100% coverage
+  const columnsFood = Array.from({ length: GRID_COLS }, () => []);
+
   for (let c = 0; c < GRID_COLS; c++) {
-    const colCells = [];
     for (let r = 0; r < GRID_ROWS; r++) {
-      if (grid[r][c] > 0) colCells.push({ row: r, col: c });
-    }
-    if (colCells.length > 0) {
-      // Pick 1 representative active cell in this column
-      targets.push(colCells[Math.floor(colCells.length / 2)]);
+      if (grid[r][c] > 0) {
+        columnsFood[c].push({ row: r, col: c });
+      }
     }
   }
 
@@ -237,45 +235,47 @@ function runSnakeSimulation(grid) {
   const history = [snake.map(p => ({...p}))];
   const eatenTicks = {};
 
-  const remainingTargets = [...targets];
-  let steps = 0;
-  const maxSteps = 400;
-
-  // Mark initial position if active
   if (grid[0][0] > 0) {
     eatenTicks['0,0'] = 0;
   }
 
-  while (remainingTargets.length > 0 && steps < maxSteps) {
-    steps++;
-    const head = snake[0];
-    const nextTarget = remainingTargets[0];
+  let steps = 0;
+  const maxSteps = 1000;
 
-    let pathSteps = bfs(head, nextTarget, snake, GRID_ROWS, GRID_COLS);
+  for (let c = 0; c < GRID_COLS; c++) {
+    let colFood = columnsFood[c];
+    if (colFood.length === 0) continue;
 
-    if (!pathSteps || pathSteps.length === 0) {
-      // Fallback: step towards target column
-      const targetCol = nextTarget.col;
-      const targetRow = nextTarget.row;
-      const nextCol = head.col < targetCol ? head.col + 1 : head.col > targetCol ? head.col - 1 : head.col;
-      const nextRow = head.row < targetRow ? head.row + 1 : head.row > targetRow ? head.row - 1 : head.row;
-      pathSteps = [{ row: nextRow, col: nextCol }];
-    }
+    while (colFood.length > 0 && steps < maxSteps) {
+      const head = snake[0];
 
-    const nextMove = pathSteps[0];
-    snake.unshift(nextMove);
-    snake.pop();
+      colFood.sort((a, b) => Math.abs(a.row - head.row) - Math.abs(b.row - head.row));
 
-    history.push(snake.map(p => ({...p})));
+      const nextTarget = colFood[0];
+      let pathSteps = bfs(head, nextTarget, snake, GRID_ROWS, GRID_COLS);
 
-    const newHead = snake[0];
-    const key = `${newHead.row},${newHead.col}`;
-    if (grid[newHead.row] && grid[newHead.row][newHead.col] > 0 && eatenTicks[key] === undefined) {
-      eatenTicks[key] = steps;
-    }
+      if (!pathSteps || pathSteps.length === 0) {
+        const nextCol = head.col < nextTarget.col ? head.col + 1 : head.col > nextTarget.col ? head.col - 1 : head.col;
+        const nextRow = head.row < nextTarget.row ? head.row + 1 : head.row > nextTarget.row ? head.row - 1 : head.row;
+        pathSteps = [{ row: nextRow, col: nextCol }];
+      }
 
-    if (newHead.row === nextTarget.row && newHead.col === nextTarget.col) {
-      remainingTargets.shift();
+      for (const nextMove of pathSteps) {
+        steps++;
+        snake.unshift(nextMove);
+        snake.pop();
+
+        history.push(snake.map(p => ({...p})));
+
+        const newHead = snake[0];
+        const key = `${newHead.row},${newHead.col}`;
+        if (grid[newHead.row] && grid[newHead.row][newHead.col] > 0 && eatenTicks[key] === undefined) {
+          eatenTicks[key] = steps;
+        }
+
+        colFood = colFood.filter(f => !(f.row === newHead.row && f.col === newHead.col));
+        if (colFood.length === 0) break;
+      }
     }
   }
 
