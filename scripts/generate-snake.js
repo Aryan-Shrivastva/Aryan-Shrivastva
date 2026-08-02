@@ -35,7 +35,7 @@ const CELL_PITCH = CELL_SIZE + CELL_GAP;
 const GRID_COLS = 52;
 const GRID_ROWS = 7;
 const SNAKE_LENGTH = 5;
-const ANIMATION_DURATION_MS = 60000; // 1 minute animation (original speed)
+const ANIMATION_DURATION_MS = 120000; // 2 minutes (slow, relaxed movement speed)
 const PADDING = { left: 16, top: 32, right: 16, bottom: 24 };
 
 // ============================================================
