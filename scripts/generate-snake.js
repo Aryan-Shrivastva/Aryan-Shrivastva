@@ -329,67 +329,12 @@ function generateAnimatedSVG(gridData, history, eatenTicks, username) {
   const viewH = contentH + PADDING.top + PADDING.bottom + 14;
   const progressY = PADDING.top + contentH + 14;
 
-  const THEMES = [
-    {
-      name: 'Purple (Default)',
-      c0: '#161b22', c1: '#4a3a8a', c2: '#6c5ce7', c3: '#845ef7', c4: '#a78bfa',
-      sn0: '#c084fc', sn1: '#a855f7', sn2: '#9333ea', sn3: '#7e22ce', sn4: '#6b21a8'
-    },
-    {
-      name: 'Ocean Blue',
-      c0: '#161b22', c1: '#075985', c2: '#0284c7', c3: '#38bdf8', c4: '#7dd3fc',
-      sn0: '#93c5fd', sn1: '#60a5fa', sn2: '#3b82f6', sn3: '#2563eb', sn4: '#1d4ed8'
-    },
-    {
-      name: 'Emerald Green',
-      c0: '#161b22', c1: '#0e4429', c2: '#006d32', c3: '#26a641', c4: '#39d353',
-      sn0: '#6ee7b7', sn1: '#34d399', sn2: '#10b981', sn3: '#059669', sn4: '#047857'
-    },
-    {
-      name: 'Sunset Orange',
-      c0: '#161b22', c1: '#7c2d12', c2: '#c2410c', c3: '#f97316', c4: '#fb923c',
-      sn0: '#fdba74', sn1: '#fb923c', sn2: '#f97316', sn3: '#ea580c', sn4: '#c2410c'
-    },
-    {
-      name: 'Cyberpunk Pink',
-      c0: '#161b22', c1: '#831843', c2: '#be185d', c3: '#f43f5e', c4: '#fb7185',
-      sn0: '#f472b6', sn1: '#f43f5e', sn2: '#e11d48', sn3: '#be185d', sn4: '#9f1239'
-    }
-  ];
-
-  // Pick a random starting theme for variety on each build
-  const initIdx = Math.floor(Math.random() * THEMES.length);
-  const defT = THEMES[initIdx];
-
   let css = '';
-  css += `:root{\n`;
-  css += `  --cb:${PALETTE.cellBorder};\n`;
-  css += `  --c0:${defT.c0};--c1:${defT.c1};--c2:${defT.c2};--c3:${defT.c3};--c4:${defT.c4};\n`;
-  css += `  --sn0:${defT.sn0};--sn1:${defT.sn1};--sn2:${defT.sn2};--sn3:${defT.sn3};--sn4:${defT.sn4};\n`;
-  css += `  animation:switchTheme 20s step-end infinite;\n`;
-  css += `  animation-play-state:paused;\n`;
-  css += `}\n`;
+  css += `:root{--cb:${PALETTE.cellBorder};--csh:${PALETTE.snakeHead};--csb:${PALETTE.snakeBody};`;
+  PALETTE.levels.forEach((c, i) => { css += `--c${i}:${c};`; });
+  css += '}\n';
 
-  // Keyframes for cycling themes on button interaction
-  css += `@keyframes switchTheme{\n`;
-  const tPct = 100 / THEMES.length;
-  for (let i = 0; i < THEMES.length; i++) {
-    const t = THEMES[(initIdx + i) % THEMES.length];
-    const sPct = (i * tPct).toFixed(1);
-    const ePct = ((i + 1) * tPct - 0.1).toFixed(1);
-    css += `  ${sPct}%,${ePct}%{\n`;
-    css += `    --c0:${t.c0};--c1:${t.c1};--c2:${t.c2};--c3:${t.c3};--c4:${t.c4};\n`;
-    css += `    --sn0:${t.sn0};--sn1:${t.sn1};--sn2:${t.sn2};--sn3:${t.sn3};--sn4:${t.sn4};\n`;
-    css += `  }\n`;
-  }
-  css += `}\n`;
-
-  css += `.btn-theme{cursor:pointer}\n`;
-  css += `.btn-theme:hover .btn-bg{fill:#30363d;stroke:#a78bfa}\n`;
-  css += `.btn-theme:hover .btn-txt{fill:#ffffff}\n`;
-  css += `#btn-theme:hover ~ *,#btn-theme:active ~ *,svg:has(#btn-theme:hover),svg:has(#btn-theme:active){animation-play-state:running}\n`;
-
-  const SNAKE_VARS = ['var(--sn0)', 'var(--sn1)', 'var(--sn2)', 'var(--sn3)', 'var(--sn4)'];
+  const SNAKE_COLORS = ['#c084fc', '#a855f7', '#9333ea', '#7e22ce', '#6b21a8'];
   const SNAKE_SCALES = [1.25, 0.92, 0.74, 0.54, 0.36];
 
   css += `.c{shape-rendering:geometricPrecision;stroke-width:1px;stroke:var(--cb);width:${CELL_SIZE}px;height:${CELL_SIZE}px;transform-box:fill-box;transform-origin:center;transition:stroke 0.15s, stroke-width 0.15s}\n`;
@@ -418,7 +363,7 @@ function generateAnimatedSVG(gridData, history, eatenTicks, username) {
 
         let color, scale;
         if (snakeIndex >= 0 && snakeIndex < SNAKE_LENGTH) {
-          color = SNAKE_VARS[snakeIndex];
+          color = SNAKE_COLORS[snakeIndex];
           scale = SNAKE_SCALES[snakeIndex];
         } else {
           color = t < eatenAt ? initialColor : 'var(--c0)';
@@ -469,12 +414,6 @@ function generateAnimatedSVG(gridData, history, eatenTicks, username) {
 
   let els = '';
   els += `<rect x="0" y="0" width="${viewW}" height="${viewH}" fill="${PALETTE.background}" rx="6"/>\n`;
-
-  // Render Theme Switcher Button top right
-  els += `<g id="btn-theme" class="btn-theme" transform="translate(585, 6)">
-  <rect class="btn-bg" width="105" height="20" rx="4" fill="#21262d" stroke="#30363d" stroke-width="1"/>
-  <text class="btn-txt" x="52.5" y="14" text-anchor="middle" fill="#c9d1d9" font-size="10" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="600">🎨 Change Color</text>
-</g>\n`;
 
   // Render grid cells first
   for (let c = 0; c < GRID_COLS; c++) {
