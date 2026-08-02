@@ -35,7 +35,7 @@ const CELL_PITCH = CELL_SIZE + CELL_GAP;
 const GRID_COLS = 52;
 const GRID_ROWS = 7;
 const SNAKE_LENGTH = 5;
-const ANIMATION_DURATION_MS = 20000; // 20 seconds total duration for level-by-level eating
+const ANIMATION_DURATION_MS = 20000; // 20 seconds total duration for randomized hunting loop
 const PADDING = { left: 16, top: 32, right: 16, bottom: 24 };
 
 // ============================================================
@@ -216,14 +216,12 @@ function getFallbackMove(head, body, rows, cols) {
 }
 
 function runSnakeSimulation(grid) {
-  // Group active food cells by contribution level (Level 1 -> 4)
-  const levelBuckets = { 1: [], 2: [], 3: [], 4: [] };
-
+  // Collect all active food cells for randomized target selection
+  let remainingFood = [];
   for (let r = 0; r < GRID_ROWS; r++) {
     for (let c = 0; c < GRID_COLS; c++) {
-      const lvl = grid[r][c];
-      if (lvl >= 1 && lvl <= 4) {
-        levelBuckets[lvl].push({ row: r, col: c });
+      if (grid[r][c] > 0) {
+        remainingFood.push({ row: r, col: c });
       }
     }
   }
@@ -238,62 +236,45 @@ function runSnakeSimulation(grid) {
 
   if (grid[0][0] > 0) {
     eatenTicks['0,0'] = 0;
+    remainingFood = remainingFood.filter(f => !(f.row === 0 && f.col === 0));
   }
 
   let steps = 0;
   const maxSteps = 1500;
 
-  // Process level 1 first (lightest), then level 2, level 3, level 4 (darkest)
-  for (let targetLevel = 1; targetLevel <= 4; targetLevel++) {
-    let currentLevelFood = levelBuckets[targetLevel].filter(
-      f => eatenTicks[`${f.row},${f.col}`] === undefined
-    );
+  while (remainingFood.length > 0 && steps < maxSteps) {
+    const head = snake[0];
 
-    while (currentLevelFood.length > 0 && steps < maxSteps) {
-      const head = snake[0];
+    // Pick a random uneaten food cell anywhere on the board
+    const randomIndex = Math.floor(Math.random() * remainingFood.length);
+    const target = remainingFood[randomIndex];
 
-      // Find closest uneaten food in the current contribution level
-      let closestFood = null;
-      let minDist = Infinity;
+    let pathSteps = bfs(head, target, snake, GRID_ROWS, GRID_COLS);
 
-      currentLevelFood.forEach(f => {
-        const dist = Math.abs(f.row - head.row) + Math.abs(f.col - head.col);
-        if (dist < minDist) {
-          minDist = dist;
-          closestFood = f;
-        }
-      });
+    if (!pathSteps || pathSteps.length === 0) {
+      pathSteps = [getFallbackMove(head, snake, GRID_ROWS, GRID_COLS)];
+    }
 
-      if (!closestFood) break;
+    for (const nextMove of pathSteps) {
+      steps++;
+      snake.unshift(nextMove);
+      snake.pop();
 
-      let pathSteps = bfs(head, closestFood, snake, GRID_ROWS, GRID_COLS);
+      history.push(snake.map(p => ({...p})));
 
-      if (!pathSteps || pathSteps.length === 0) {
-        pathSteps = [getFallbackMove(head, snake, GRID_ROWS, GRID_COLS)];
+      const newHead = snake[0];
+      const key = `${newHead.row},${newHead.col}`;
+
+      if (grid[newHead.row] && grid[newHead.row][newHead.col] > 0 && eatenTicks[key] === undefined) {
+        eatenTicks[key] = steps;
       }
 
-      for (const nextMove of pathSteps) {
-        steps++;
-        snake.unshift(nextMove);
-        snake.pop();
-
-        history.push(snake.map(p => ({...p})));
-
-        const newHead = snake[0];
-        const key = `${newHead.row},${newHead.col}`;
-        if (grid[newHead.row] && grid[newHead.row][newHead.col] > 0 && eatenTicks[key] === undefined) {
-          eatenTicks[key] = steps;
-        }
-
-        currentLevelFood = currentLevelFood.filter(
-          f => eatenTicks[`${f.row},${f.col}`] === undefined
-        );
-        if (currentLevelFood.length === 0) break;
-      }
+      remainingFood = remainingFood.filter(f => eatenTicks[`${f.row},${f.col}`] === undefined);
+      if (remainingFood.length === 0) break;
     }
   }
 
-  // Smooth exit off the right edge of the grid after eating all levels
+  // Smooth exit off the right edge of the grid after all food is eaten
   while (snake[0].col < GRID_COLS + SNAKE_LENGTH && steps < maxSteps) {
     steps++;
     const head = snake[0];
