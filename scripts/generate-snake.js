@@ -35,7 +35,7 @@ const CELL_PITCH = CELL_SIZE + CELL_GAP;
 const GRID_COLS = 52;
 const GRID_ROWS = 7;
 const SNAKE_LENGTH = 5;
-const ANIMATION_DURATION_MS = 20000; // 20 seconds total duration for randomized hunting loop
+const ANIMATION_DURATION_MS = 40000; // 40 seconds duration (half of previous 20s speed)
 const PADDING = { left: 16, top: 32, right: 16, bottom: 24 };
 
 // ============================================================
@@ -240,7 +240,7 @@ function runSnakeSimulation(grid) {
   }
 
   let steps = 0;
-  const maxSteps = 1500;
+  const maxSteps = 2500;
 
   while (remainingFood.length > 0 && steps < maxSteps) {
     const head = snake[0];
@@ -274,8 +274,16 @@ function runSnakeSimulation(grid) {
     }
   }
 
+  // Safety check: ensure 100% of all active food cells are marked as eaten
+  remainingFood.forEach(f => {
+    const key = `${f.row},${f.col}`;
+    if (eatenTicks[key] === undefined) {
+      eatenTicks[key] = steps;
+    }
+  });
+
   // Smooth exit off the right edge of the grid after all food is eaten
-  while (snake[0].col < GRID_COLS + SNAKE_LENGTH && steps < maxSteps) {
+  while (snake[0].col < GRID_COLS + SNAKE_LENGTH && steps < maxSteps + 200) {
     steps++;
     const head = snake[0];
     let nextMove;
