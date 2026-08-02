@@ -35,7 +35,7 @@ const CELL_PITCH = CELL_SIZE + CELL_GAP;
 const GRID_COLS = 52;
 const GRID_ROWS = 7;
 const SNAKE_LENGTH = 5;
-const ANIMATION_DURATION_MS = 24000; // 24 seconds total duration for full grid clearing
+const ANIMATION_DURATION_MS = 12000; // 12 seconds loop (snake eats 100% of all contributions quickly)
 const PADDING = { left: 16, top: 32, right: 16, bottom: 24 };
 
 // ============================================================
