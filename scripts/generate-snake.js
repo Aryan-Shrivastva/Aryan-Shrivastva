@@ -35,7 +35,7 @@ const CELL_PITCH = CELL_SIZE + CELL_GAP;
 const GRID_COLS = 52;
 const GRID_ROWS = 7;
 const SNAKE_LENGTH = 5;
-const ANIMATION_DURATION_MS = 40000; // 40 seconds duration (half of previous 20s speed)
+const ANIMATION_DURATION_MS = 72000; // 72 seconds (1/4th current speed)
 const PADDING = { left: 16, top: 32, right: 16, bottom: 24 };
 
 // ============================================================
@@ -216,12 +216,11 @@ function getFallbackMove(head, body, rows, cols) {
 }
 
 function runSnakeSimulation(grid) {
-  // Collect all active food cells for randomized target selection
-  let remainingFood = [];
+  const food = [];
   for (let r = 0; r < GRID_ROWS; r++) {
     for (let c = 0; c < GRID_COLS; c++) {
       if (grid[r][c] > 0) {
-        remainingFood.push({ row: r, col: c });
+        food.push({ row: r, col: c });
       }
     }
   }
@@ -231,59 +230,64 @@ function runSnakeSimulation(grid) {
     snake.push({ row: 0, col: 0 });
   }
 
+  const remainingFood = [...food];
   const history = [snake.map(p => ({...p}))];
   const eatenTicks = {};
 
-  if (grid[0][0] > 0) {
-    eatenTicks['0,0'] = 0;
-    remainingFood = remainingFood.filter(f => !(f.row === 0 && f.col === 0));
-  }
-
   let steps = 0;
-  const maxSteps = 2500;
+  const maxSteps = 1200;
 
   while (remainingFood.length > 0 && steps < maxSteps) {
+    steps++;
     const head = snake[0];
 
-    // Pick a random uneaten food cell anywhere on the board
-    const randomIndex = Math.floor(Math.random() * remainingFood.length);
-    const target = remainingFood[randomIndex];
+    let closestFood = null;
+    let minDist = Infinity;
+    let closestIdx = -1;
 
-    let pathSteps = bfs(head, target, snake, GRID_ROWS, GRID_COLS);
+    remainingFood.forEach((f, idx) => {
+      const dist = Math.abs(f.row - head.row) + Math.abs(f.col - head.col);
+      if (dist < minDist) {
+        minDist = dist;
+        closestFood = f;
+        closestIdx = idx;
+      }
+    });
 
-    if (!pathSteps || pathSteps.length === 0) {
-      pathSteps = [getFallbackMove(head, snake, GRID_ROWS, GRID_COLS)];
+    let pathSteps = bfs(head, closestFood, snake, GRID_ROWS, GRID_COLS);
+
+    if (!pathSteps) {
+      for (let i = 0; i < remainingFood.length; i++) {
+        pathSteps = bfs(head, remainingFood[i], snake, GRID_ROWS, GRID_COLS);
+        if (pathSteps) {
+          closestIdx = i;
+          break;
+        }
+      }
     }
 
-    for (const nextMove of pathSteps) {
-      steps++;
-      snake.unshift(nextMove);
-      snake.pop();
+    let nextMove;
+    if (pathSteps && pathSteps.length > 0) {
+      nextMove = pathSteps[0];
+    } else {
+      nextMove = getFallbackMove(head, snake, GRID_ROWS, GRID_COLS);
+    }
 
-      history.push(snake.map(p => ({...p})));
+    snake.unshift(nextMove);
+    snake.pop();
 
-      const newHead = snake[0];
-      const key = `${newHead.row},${newHead.col}`;
+    history.push(snake.map(p => ({...p})));
 
-      if (grid[newHead.row] && grid[newHead.row][newHead.col] > 0 && eatenTicks[key] === undefined) {
-        eatenTicks[key] = steps;
-      }
-
-      remainingFood = remainingFood.filter(f => eatenTicks[`${f.row},${f.col}`] === undefined);
-      if (remainingFood.length === 0) break;
+    const newHead = snake[0];
+    const key = `${newHead.row},${newHead.col}`;
+    const eatenIdx = remainingFood.findIndex(f => f.row === newHead.row && f.col === newHead.col);
+    if (eatenIdx !== -1) {
+      remainingFood.splice(eatenIdx, 1);
+      eatenTicks[key] = steps;
     }
   }
 
-  // Safety check: ensure 100% of all active food cells are marked as eaten
-  remainingFood.forEach(f => {
-    const key = `${f.row},${f.col}`;
-    if (eatenTicks[key] === undefined) {
-      eatenTicks[key] = steps;
-    }
-  });
-
-  // Smooth exit off the right edge of the grid after all food is eaten
-  while (snake[0].col < GRID_COLS + SNAKE_LENGTH && steps < maxSteps + 200) {
+  while (snake[0].col < GRID_COLS + SNAKE_LENGTH && steps < maxSteps) {
     steps++;
     const head = snake[0];
     let nextMove;
@@ -300,14 +304,7 @@ function runSnakeSimulation(grid) {
     }
     snake.unshift(nextMove);
     snake.pop();
-
     history.push(snake.map(p => ({...p})));
-
-    const newHead = snake[0];
-    const key = `${newHead.row},${newHead.col}`;
-    if (grid[newHead.row] && grid[newHead.row][newHead.col] > 0 && eatenTicks[key] === undefined) {
-      eatenTicks[key] = steps;
-    }
   }
 
   return { history, eatenTicks };
