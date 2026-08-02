@@ -35,7 +35,7 @@ const CELL_PITCH = CELL_SIZE + CELL_GAP;
 const GRID_COLS = 52;
 const GRID_ROWS = 7;
 const SNAKE_LENGTH = 5;
-const ANIMATION_DURATION_MS = 12000; // 12 seconds loop (snake eats 100% of all contributions quickly)
+const ANIMATION_DURATION_MS = 20000; // 20 seconds total duration for level-by-level eating
 const PADDING = { left: 16, top: 32, right: 16, bottom: 24 };
 
 // ============================================================
@@ -216,13 +216,14 @@ function getFallbackMove(head, body, rows, cols) {
 }
 
 function runSnakeSimulation(grid) {
-  // Group ALL active cells by column (0..51) to ensure 100% coverage
-  const columnsFood = Array.from({ length: GRID_COLS }, () => []);
+  // Group active food cells by contribution level (Level 1 -> 4)
+  const levelBuckets = { 1: [], 2: [], 3: [], 4: [] };
 
-  for (let c = 0; c < GRID_COLS; c++) {
-    for (let r = 0; r < GRID_ROWS; r++) {
-      if (grid[r][c] > 0) {
-        columnsFood[c].push({ row: r, col: c });
+  for (let r = 0; r < GRID_ROWS; r++) {
+    for (let c = 0; c < GRID_COLS; c++) {
+      const lvl = grid[r][c];
+      if (lvl >= 1 && lvl <= 4) {
+        levelBuckets[lvl].push({ row: r, col: c });
       }
     }
   }
@@ -240,24 +241,35 @@ function runSnakeSimulation(grid) {
   }
 
   let steps = 0;
-  const maxSteps = 1000;
+  const maxSteps = 1500;
 
-  for (let c = 0; c < GRID_COLS; c++) {
-    let colFood = columnsFood[c];
-    if (colFood.length === 0) continue;
+  // Process level 1 first (lightest), then level 2, level 3, level 4 (darkest)
+  for (let targetLevel = 1; targetLevel <= 4; targetLevel++) {
+    let currentLevelFood = levelBuckets[targetLevel].filter(
+      f => eatenTicks[`${f.row},${f.col}`] === undefined
+    );
 
-    while (colFood.length > 0 && steps < maxSteps) {
+    while (currentLevelFood.length > 0 && steps < maxSteps) {
       const head = snake[0];
 
-      colFood.sort((a, b) => Math.abs(a.row - head.row) - Math.abs(b.row - head.row));
+      // Find closest uneaten food in the current contribution level
+      let closestFood = null;
+      let minDist = Infinity;
 
-      const nextTarget = colFood[0];
-      let pathSteps = bfs(head, nextTarget, snake, GRID_ROWS, GRID_COLS);
+      currentLevelFood.forEach(f => {
+        const dist = Math.abs(f.row - head.row) + Math.abs(f.col - head.col);
+        if (dist < minDist) {
+          minDist = dist;
+          closestFood = f;
+        }
+      });
+
+      if (!closestFood) break;
+
+      let pathSteps = bfs(head, closestFood, snake, GRID_ROWS, GRID_COLS);
 
       if (!pathSteps || pathSteps.length === 0) {
-        const nextCol = head.col < nextTarget.col ? head.col + 1 : head.col > nextTarget.col ? head.col - 1 : head.col;
-        const nextRow = head.row < nextTarget.row ? head.row + 1 : head.row > nextTarget.row ? head.row - 1 : head.row;
-        pathSteps = [{ row: nextRow, col: nextCol }];
+        pathSteps = [getFallbackMove(head, snake, GRID_ROWS, GRID_COLS)];
       }
 
       for (const nextMove of pathSteps) {
@@ -273,13 +285,15 @@ function runSnakeSimulation(grid) {
           eatenTicks[key] = steps;
         }
 
-        colFood = colFood.filter(f => !(f.row === newHead.row && f.col === newHead.col));
-        if (colFood.length === 0) break;
+        currentLevelFood = currentLevelFood.filter(
+          f => eatenTicks[`${f.row},${f.col}`] === undefined
+        );
+        if (currentLevelFood.length === 0) break;
       }
     }
   }
 
-  // Smooth exit off the right edge of the grid
+  // Smooth exit off the right edge of the grid after eating all levels
   while (snake[0].col < GRID_COLS + SNAKE_LENGTH && steps < maxSteps) {
     steps++;
     const head = snake[0];
