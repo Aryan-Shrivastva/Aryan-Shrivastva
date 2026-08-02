@@ -1,24 +1,26 @@
-# GitHub Action for generating a LeetCode contribution snake animation
-# Fetches your LeetCode submission data and generates an animated SVG
+# GitHub Action for generating LeetCode stats & contribution snake animation
+# Fetches your LeetCode submission data and generates animated SVGs automatically
 
-name: Generate Snake Animation
+name: Generate LeetCode Snake & Stats
 
 on:
-  # Run automatically every 24 hours
+  # Run automatically every 2 hours
   schedule:
-    - cron: "0 */24 * * *"
+    - cron: "0 */2 * * *"
 
   # Allows manual trigger from Actions tab
   workflow_dispatch:
 
-  # Run on every push to master
+  # Run on every push to main
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout
@@ -29,7 +31,7 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Generate LeetCode Snake
+      - name: Generate LeetCode Snake & Stats
         run: node scripts/generate-snake.js
         env:
           LEETCODE_USERNAME: AryannnnnnShrivastva
@@ -38,5 +40,6 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           default_author: github_actions
-          message: "Generate LeetCode Snake"
+          message: "Update LeetCode Stats & Snake"
           add: "dist/*"
+
