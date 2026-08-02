@@ -119,12 +119,26 @@ function buildContributionGrid(submissionCalendar) {
     : submissionCalendar;
 
   const grid = Array.from({ length: GRID_ROWS }, () => Array(GRID_COLS).fill(0));
+  const countsGrid = Array.from({ length: GRID_ROWS }, () => Array(GRID_COLS).fill(0));
+  const datesGrid = Array.from({ length: GRID_ROWS }, () => Array(GRID_COLS).fill(''));
+
+  const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
   const now = new Date();
   const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
   const dayOfWeek = today.getUTCDay();
   const gridStart = new Date(today);
   gridStart.setUTCDate(gridStart.getUTCDate() - (51 * 7 + dayOfWeek));
+
+  for (let c = 0; c < GRID_COLS; c++) {
+    for (let r = 0; r < GRID_ROWS; r++) {
+      const cellDate = new Date(gridStart.getTime() + (c * 7 + r) * 86400000);
+      const mName = MONTH_NAMES[cellDate.getUTCMonth()];
+      const dNum = cellDate.getUTCDate();
+      const yr = cellDate.getUTCFullYear();
+      datesGrid[r][c] = `${mName} ${dNum}, ${yr}`;
+    }
+  }
 
   for (const [tsStr, count] of Object.entries(calendar)) {
     const date = new Date(parseInt(tsStr) * 1000);
@@ -137,10 +151,11 @@ function buildContributionGrid(submissionCalendar) {
 
     if (row < 0 || row >= GRID_ROWS || col < 0 || col >= GRID_COLS) continue;
 
+    countsGrid[row][col] = count;
     grid[row][col] = count >= 10 ? 4 : count >= 7 ? 3 : count >= 4 ? 2 : count >= 1 ? 1 : 0;
   }
 
-  return grid;
+  return { grid, countsGrid, datesGrid };
 }
 
 // ============================================================
@@ -303,7 +318,8 @@ function toId(r, c) {
   return `c_${r}_${c}`;
 }
 
-function generateAnimatedSVG(grid, history, eatenTicks, username) {
+function generateAnimatedSVG(gridData, history, eatenTicks, username) {
+  const { grid, countsGrid, datesGrid } = gridData;
   const totalTicks = history.length;
   const stepPct = 100 / totalTicks;
   
@@ -318,7 +334,8 @@ function generateAnimatedSVG(grid, history, eatenTicks, username) {
   PALETTE.levels.forEach((c, i) => { css += `--c${i}:${c};`; });
   css += '}\n';
 
-  css += `.c{shape-rendering:geometricPrecision;stroke-width:1px;stroke:var(--cb);width:${CELL_SIZE}px;height:${CELL_SIZE}px}\n`;
+  css += `.c{shape-rendering:geometricPrecision;stroke-width:1px;stroke:var(--cb);width:${CELL_SIZE}px;height:${CELL_SIZE}px;transition:stroke 0.15s, stroke-width 0.15s}\n`;
+  css += `.c:hover{stroke:#a78bfa !important;stroke-width:1.5px;cursor:pointer}\n`;
   css += `.u{transform-origin:0 0;transform:scale(0,1);animation:u0 ${ANIMATION_DURATION_MS}ms linear infinite}\n`;
 
   for (let r = 0; r < GRID_ROWS; r++) {
@@ -392,7 +409,12 @@ function generateAnimatedSVG(grid, history, eatenTicks, username) {
       const id = toId(r, c);
       const x = PADDING.left + c * CELL_PITCH;
       const y = PADDING.top + r * CELL_PITCH;
-      els += `<rect class="c ${id}" x="${x}" y="${y}" rx="2" ry="2"/>\n`;
+      const count = (countsGrid && countsGrid[r] && countsGrid[r][c]) || 0;
+      const dateStr = (datesGrid && datesGrid[r] && datesGrid[r][c]) || '';
+      const countText = count === 0 ? 'No submissions' : count === 1 ? '1 submission' : `${count} submissions`;
+      const tooltip = `${countText} on ${dateStr}`;
+
+      els += `<rect class="c ${id}" x="${x}" y="${y}" rx="2" ry="2"><title>${tooltip}</title></rect>\n`;
     }
   }
 
@@ -513,7 +535,7 @@ async function main() {
 
   // 1. Generate Snake Game SVG
   console.log('\n📊 Building contribution grid...');
-  const grid = buildContributionGrid(calendarData.submissionCalendar);
+  const { grid, countsGrid, datesGrid } = buildContributionGrid(calendarData.submissionCalendar);
   const activeCells = grid.flat().filter(v => v > 0).length;
   console.log(`   ✅ ${activeCells} active cells out of ${GRID_ROWS * GRID_COLS}`);
 
@@ -522,7 +544,7 @@ async function main() {
   console.log(`   ✅ Snake simulation finished in ${history.length} ticks`);
 
   console.log('\n🎨 Generating animated Snake SVG...');
-  const snakeSvg = generateAnimatedSVG(grid, history, eatenTicks, LEETCODE_USERNAME);
+  const snakeSvg = generateAnimatedSVG({ grid, countsGrid, datesGrid }, history, eatenTicks, LEETCODE_USERNAME);
   console.log(`   ✅ Snake SVG size: ${(Buffer.byteLength(snakeSvg) / 1024).toFixed(1)} KB`);
 
   // 2. Generate Stats SVG
