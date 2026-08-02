@@ -337,6 +337,7 @@ function generateAnimatedSVG(gridData, history, eatenTicks, username) {
   css += `.c{shape-rendering:geometricPrecision;stroke-width:1px;stroke:var(--cb);width:${CELL_SIZE}px;height:${CELL_SIZE}px;transition:stroke 0.15s, stroke-width 0.15s}\n`;
   css += `.c:hover{stroke:#a78bfa !important;stroke-width:1.5px;cursor:pointer}\n`;
   css += `.u{transform-origin:0 0;transform:scale(0,1);animation:u0 ${ANIMATION_DURATION_MS}ms linear infinite}\n`;
+  css += `.tip{opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.12s ease-in-out, visibility 0.12s ease-in-out}\n`;
 
   for (let r = 0; r < GRID_ROWS; r++) {
     for (let c = 0; c < GRID_COLS; c++) {
@@ -345,6 +346,9 @@ function generateAnimatedSVG(gridData, history, eatenTicks, username) {
       const id = toId(r, c);
       const foodKey = `${r},${c}`;
       const eatenAt = eatenTicks[foodKey] !== undefined ? eatenTicks[foodKey] : Infinity;
+
+      // Hover rule to show floating tooltip overlay
+      css += `#${id}:hover ~ #t_${id}{opacity:1;visibility:visible}\n`;
 
       const timeline = [];
       let prevColor = null;
@@ -404,6 +408,7 @@ function generateAnimatedSVG(gridData, history, eatenTicks, username) {
   let els = '';
   els += `<rect x="0" y="0" width="${viewW}" height="${viewH}" fill="${PALETTE.background}" rx="6"/>\n`;
 
+  // Render grid cells first
   for (let c = 0; c < GRID_COLS; c++) {
     for (let r = 0; r < GRID_ROWS; r++) {
       const id = toId(r, c);
@@ -414,11 +419,36 @@ function generateAnimatedSVG(gridData, history, eatenTicks, username) {
       const countText = count === 0 ? 'No submissions' : count === 1 ? '1 submission' : `${count} submissions`;
       const tooltip = `${countText} on ${dateStr}`;
 
-      els += `<rect class="c ${id}" x="${x}" y="${y}" rx="2" ry="2"><title>${tooltip}</title></rect>\n`;
+      els += `<rect id="${id}" class="c ${id}" x="${x}" y="${y}" rx="2" ry="2"><title>${tooltip}</title></rect>\n`;
     }
   }
 
   els += `<rect class="u" x="${PADDING.left}" y="${progressY}" width="${contentW}" height="5" rx="2.5" fill="var(--csb)" opacity="0.5"/>\n`;
+
+  // Render overlay tooltips at the end (always on top)
+  const TIP_W = 165;
+  const TIP_H = 24;
+
+  for (let c = 0; c < GRID_COLS; c++) {
+    for (let r = 0; r < GRID_ROWS; r++) {
+      const id = toId(r, c);
+      const cellX = PADDING.left + c * CELL_PITCH;
+      const cellY = PADDING.top + r * CELL_PITCH;
+      const count = (countsGrid && countsGrid[r] && countsGrid[r][c]) || 0;
+      const dateStr = (datesGrid && datesGrid[r] && datesGrid[r][c]) || '';
+      const countText = count === 0 ? 'No submissions' : count === 1 ? '1 submission' : `${count} submissions`;
+      const tooltipText = `${countText} on ${dateStr}`;
+
+      const rawX = cellX + (CELL_SIZE / 2) - (TIP_W / 2);
+      const tipX = Math.max(8, Math.min(viewW - TIP_W - 8, rawX));
+      const tipY = r < 3 ? cellY + CELL_SIZE + 6 : cellY - TIP_H - 6;
+
+      els += `<g id="t_${id}" class="tip" transform="translate(${tipX}, ${tipY})">
+  <rect width="${TIP_W}" height="${TIP_H}" rx="5" fill="#161b22" stroke="#818cf8" stroke-width="1.2"/>
+  <text x="${TIP_W / 2}" y="16" text-anchor="middle" fill="#ffffff" font-size="10.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="600">${tooltipText}</text>
+</g>\n`;
+    }
+  }
 
   return `<svg viewBox="0 0 ${viewW} ${viewH}" width="${viewW}" height="${viewH}" xmlns="http://www.w3.org/2000/svg">
 <desc>LeetCode Contribution Snake for ${username}</desc>
