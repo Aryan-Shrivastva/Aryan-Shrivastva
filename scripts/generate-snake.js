@@ -35,7 +35,7 @@ const CELL_PITCH = CELL_SIZE + CELL_GAP;
 const GRID_COLS = 52;
 const GRID_ROWS = 7;
 const SNAKE_LENGTH = 5;
-const ANIMATION_DURATION_MS = 60000; // 1 minute animation
+const ANIMATION_DURATION_MS = 18000; // 18 seconds fast, snappy animation loop
 const PADDING = { left: 16, top: 32, right: 16, bottom: 24 };
 
 // ============================================================
@@ -334,7 +334,10 @@ function generateAnimatedSVG(gridData, history, eatenTicks, username) {
   PALETTE.levels.forEach((c, i) => { css += `--c${i}:${c};`; });
   css += '}\n';
 
-  css += `.c{shape-rendering:geometricPrecision;stroke-width:1px;stroke:var(--cb);width:${CELL_SIZE}px;height:${CELL_SIZE}px;transition:stroke 0.15s, stroke-width 0.15s}\n`;
+  const SNAKE_COLORS = ['#c084fc', '#a855f7', '#9333ea', '#7e22ce', '#6b21a8'];
+  const SNAKE_SCALES = [1.25, 0.92, 0.74, 0.54, 0.36];
+
+  css += `.c{shape-rendering:geometricPrecision;stroke-width:1px;stroke:var(--cb);width:${CELL_SIZE}px;height:${CELL_SIZE}px;transform-box:fill-box;transform-origin:center;transition:stroke 0.15s, stroke-width 0.15s}\n`;
   css += `.c:hover{stroke:#a78bfa !important;stroke-width:1.5px;cursor:pointer}\n`;
   css += `.u{transform-origin:0 0;transform:scale(0,1);animation:u0 ${ANIMATION_DURATION_MS}ms linear infinite}\n`;
   css += `.tip{opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.12s ease-in-out, visibility 0.12s ease-in-out}\n`;
@@ -352,43 +355,47 @@ function generateAnimatedSVG(gridData, history, eatenTicks, username) {
 
       const timeline = [];
       let prevColor = null;
+      let prevScale = null;
 
       for (let t = 0; t < totalTicks; t++) {
         const snakeAtTick = history[t];
         const snakeIndex = snakeAtTick.findIndex(p => p.row === r && p.col === c);
 
-        let color;
-        if (snakeIndex === 0) {
-          color = 'var(--csh)';
-        } else if (snakeIndex > 0) {
-          color = 'var(--csb)';
+        let color, scale;
+        if (snakeIndex >= 0 && snakeIndex < SNAKE_LENGTH) {
+          color = SNAKE_COLORS[snakeIndex];
+          scale = SNAKE_SCALES[snakeIndex];
         } else {
           color = t < eatenAt ? initialColor : 'var(--c0)';
+          scale = 1.0;
         }
 
-        if (color !== prevColor) {
-          timeline.push({ tick: t, color });
+        if (color !== prevColor || scale !== prevScale) {
+          timeline.push({ tick: t, color, scale });
           prevColor = color;
+          prevScale = scale;
         }
       }
 
       if (timeline.length === 1 && initialVal === 0) {
-        css += `.c.${id}{fill:var(--c0)}\n`;
+        css += `.c.${id}{fill:var(--c0);transform:scale(1)}\n`;
         continue;
       }
 
       css += `@keyframes k_${id}{`;
       for (let i = 0; i < timeline.length; i++) {
-        const { tick, color } = timeline[i];
+        const { tick, color, scale } = timeline[i];
         const pct = (tick * stepPct).toFixed(2);
         
         if (i > 0) {
           const prevPct = ((tick - 0.05) * stepPct).toFixed(2);
-          css += `${prevPct}%{fill:${timeline[i - 1].color}}`;
+          const prev = timeline[i - 1];
+          css += `${prevPct}%{fill:${prev.color};transform:scale(${prev.scale})}`;
         }
-        css += `${pct}%{fill:${color}}`;
+        css += `${pct}%{fill:${color};transform:scale(${scale})}`;
       }
-      css += `100%{fill:${timeline[timeline.length - 1].color}}`;
+      const last = timeline[timeline.length - 1];
+      css += `100%{fill:${last.color};transform:scale(${last.scale})}`;
       css += '}\n';
 
       css += `.c.${id}{animation:k_${id} ${ANIMATION_DURATION_MS}ms linear infinite}\n`;
