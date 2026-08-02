@@ -27,11 +27,11 @@
 
 <div align="center">
   <a href="https://leetcode.com/u/AryannnnnnShrivastva/" target="_blank">
-    <img src="./dist/leetcode-stats.svg" alt="LeetCode Stats" />
+    <img src="./dist/leetcode-stats.svg?v=1" alt="LeetCode Stats" />
   </a>
   <br/><br/>
   <a href="https://leetcode.com/u/AryannnnnnShrivastva/" target="_blank">
-    <img src="./dist/leetcode-snake.svg" alt="LeetCode Snake eating my contribution grid" stroke-width="1.5" />
+    <img src="./dist/leetcode-snake.svg?v=1" alt="LeetCode Snake eating my contribution grid" stroke-width="1.5" />
   </a>
 </div>
 
