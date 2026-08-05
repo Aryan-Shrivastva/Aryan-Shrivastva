@@ -14,9 +14,9 @@
       <rect width="490" height="195" rx="8" fill="#0d1117" stroke="#1f2937" stroke-width="1.5"/>
 
       <!-- Left Column (Submissions) -->
-      <text x="90" y="95" class="title">1,630</text>
+      <text x="90" y="95" class="title">1,632</text>
       <text x="90" y="125" class="label">Total Submissions</text>
-      <text x="90" y="148" class="sublabel">Active Days: 273</text>
+      <text x="90" y="148" class="sublabel">Active Days: 274</text>
 
       <!-- Column Separators -->
       <line x1="172" y1="35" x2="172" y2="160" class="separator" stroke-linecap="round" />
@@ -32,7 +32,7 @@
         <path d="M8 0C3 3 1.5 6 1.5 9.5C1.5 13.5 4.5 16 8 16C11.5 16 14.5 13.5 14.5 9.5C14.5 5 11 2 8 0ZM8 13C6.3 13 5 11.7 5 10C5 8.9 5.8 7.4 7.2 6.3C7.6 6 8.4 6 8.8 6.3C10.2 7.4 11 8.9 11 10C11 11.7 9.7 13 8 13Z" fill="#ffb020"/>
       </g>
 
-      <text x="245" y="91" class="rating-val">1706</text>
+      <text x="245" y="91" class="rating-val">1705</text>
       <text x="245" y="125" class="label">Contest Rating</text>
       <text x="245" y="148" class="sublabel-highlight">Top 13.4%</text>
 
