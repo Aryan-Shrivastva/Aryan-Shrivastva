@@ -893,7 +893,7 @@
 @keyframes k_c_5_50{0.00%{fill:var(--c3);transform:scale(1)}70.90%{fill:var(--c3);transform:scale(1)}70.91%{fill:#c084fc;transform:scale(1.25)}71.14%{fill:#c084fc;transform:scale(1.25)}71.15%{fill:#a855f7;transform:scale(0.92)}71.38%{fill:#a855f7;transform:scale(0.92)}71.39%{fill:#9333ea;transform:scale(0.74)}71.62%{fill:#9333ea;transform:scale(0.74)}71.63%{fill:#7e22ce;transform:scale(0.54)}71.86%{fill:#7e22ce;transform:scale(0.54)}71.88%{fill:#6b21a8;transform:scale(0.36)}72.10%{fill:#6b21a8;transform:scale(0.36)}72.12%{fill:var(--c0);transform:scale(1)}80.04%{fill:var(--c0);transform:scale(1)}80.05%{fill:#c084fc;transform:scale(1.25)}80.28%{fill:#c084fc;transform:scale(1.25)}80.29%{fill:#a855f7;transform:scale(0.92)}80.52%{fill:#a855f7;transform:scale(0.92)}80.53%{fill:#9333ea;transform:scale(0.74)}80.76%{fill:#9333ea;transform:scale(0.74)}80.77%{fill:#7e22ce;transform:scale(0.54)}81.00%{fill:#7e22ce;transform:scale(0.54)}81.01%{fill:#6b21a8;transform:scale(0.36)}81.24%{fill:#6b21a8;transform:scale(0.36)}81.25%{fill:var(--c0);transform:scale(1)}100%{fill:var(--c0);transform:scale(1)}}
 .c.c_5_50{animation:k_c_5_50 72000ms linear infinite}
 #c_5_51:hover ~ #t_c_5_51{opacity:1;visibility:visible}
-@keyframes k_c_5_51{0.00%{fill:var(--c0);transform:scale(1)}70.66%{fill:var(--c0);transform:scale(1)}70.67%{fill:#c084fc;transform:scale(1.25)}70.90%{fill:#c084fc;transform:scale(1.25)}70.91%{fill:#a855f7;transform:scale(0.92)}71.14%{fill:#a855f7;transform:scale(0.92)}71.15%{fill:#9333ea;transform:scale(0.74)}71.38%{fill:#9333ea;transform:scale(0.74)}71.39%{fill:#7e22ce;transform:scale(0.54)}71.62%{fill:#7e22ce;transform:scale(0.54)}71.63%{fill:#6b21a8;transform:scale(0.36)}71.86%{fill:#6b21a8;transform:scale(0.36)}71.88%{fill:var(--c0);transform:scale(1)}100%{fill:var(--c0);transform:scale(1)}}
+@keyframes k_c_5_51{0.00%{fill:var(--c1);transform:scale(1)}70.66%{fill:var(--c1);transform:scale(1)}70.67%{fill:#c084fc;transform:scale(1.25)}70.90%{fill:#c084fc;transform:scale(1.25)}70.91%{fill:#a855f7;transform:scale(0.92)}71.14%{fill:#a855f7;transform:scale(0.92)}71.15%{fill:#9333ea;transform:scale(0.74)}71.38%{fill:#9333ea;transform:scale(0.74)}71.39%{fill:#7e22ce;transform:scale(0.54)}71.62%{fill:#7e22ce;transform:scale(0.54)}71.63%{fill:#6b21a8;transform:scale(0.36)}71.86%{fill:#6b21a8;transform:scale(0.36)}71.88%{fill:var(--c0);transform:scale(1)}100%{fill:var(--c0);transform:scale(1)}}
 .c.c_5_51{animation:k_c_5_51 72000ms linear infinite}
 #c_6_0:hover ~ #t_c_6_0{opacity:1;visibility:visible}
 .c.c_6_0{fill:var(--c0);transform:scale(1)}
@@ -1409,7 +1409,7 @@
 <rect id="c_2_51" class="c c_2_51" x="679" y="58" rx="2" ry="2"><title>5 submissions on Aug 4, 2026</title></rect>
 <rect id="c_3_51" class="c c_3_51" x="679" y="71" rx="2" ry="2"><title>6 submissions on Aug 5, 2026</title></rect>
 <rect id="c_4_51" class="c c_4_51" x="679" y="84" rx="2" ry="2"><title>5 submissions on Aug 6, 2026</title></rect>
-<rect id="c_5_51" class="c c_5_51" x="679" y="97" rx="2" ry="2"><title>No submissions on Aug 7, 2026</title></rect>
+<rect id="c_5_51" class="c c_5_51" x="679" y="97" rx="2" ry="2"><title>2 submissions on Aug 7, 2026</title></rect>
 <rect id="c_6_51" class="c c_6_51" x="679" y="110" rx="2" ry="2"><title>No submissions on Aug 8, 2026</title></rect>
 <rect class="u" x="16" y="135" width="674" height="5" rx="2.5" fill="var(--csb)" opacity="0.5"/>
 <g id="t_c_0_0" class="tip" transform="translate(8, 49)">
@@ -2862,7 +2862,7 @@
 </g>
 <g id="t_c_5_51" class="tip" transform="translate(533, 67)">
   <rect width="165" height="24" rx="5" fill="#161b22" stroke="#818cf8" stroke-width="1.2"/>
-  <text x="82.5" y="16" text-anchor="middle" fill="#ffffff" font-size="10.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="600">No submissions on Aug 7, 2026</text>
+  <text x="82.5" y="16" text-anchor="middle" fill="#ffffff" font-size="10.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="600">2 submissions on Aug 7, 2026</text>
 </g>
 <g id="t_c_6_51" class="tip" transform="translate(533, 80)">
   <rect width="165" height="24" rx="5" fill="#161b22" stroke="#818cf8" stroke-width="1.2"/>
