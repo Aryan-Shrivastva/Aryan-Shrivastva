@@ -597,7 +597,7 @@
 @keyframes k_c_3_50{0.00%{fill:var(--c2);transform:scale(1)}43.56%{fill:var(--c2);transform:scale(1)}43.58%{fill:#c084fc;transform:scale(1.25)}43.82%{fill:#c084fc;transform:scale(1.25)}43.83%{fill:#a855f7;transform:scale(0.92)}44.07%{fill:#a855f7;transform:scale(0.92)}44.08%{fill:#9333ea;transform:scale(0.74)}44.32%{fill:#9333ea;transform:scale(0.74)}44.33%{fill:#7e22ce;transform:scale(0.54)}44.57%{fill:#7e22ce;transform:scale(0.54)}44.58%{fill:#6b21a8;transform:scale(0.36)}44.82%{fill:#6b21a8;transform:scale(0.36)}44.84%{fill:var(--c0);transform:scale(1)}86.89%{fill:var(--c0);transform:scale(1)}86.90%{fill:#c084fc;transform:scale(1.25)}87.14%{fill:#c084fc;transform:scale(1.25)}87.15%{fill:#a855f7;transform:scale(0.92)}87.39%{fill:#a855f7;transform:scale(0.92)}87.41%{fill:#9333ea;transform:scale(0.74)}87.64%{fill:#9333ea;transform:scale(0.74)}87.66%{fill:#7e22ce;transform:scale(0.54)}87.90%{fill:#7e22ce;transform:scale(0.54)}87.91%{fill:#6b21a8;transform:scale(0.36)}88.15%{fill:#6b21a8;transform:scale(0.36)}88.16%{fill:var(--c0);transform:scale(1)}100%{fill:var(--c0);transform:scale(1)}}
 .c.c_3_50{animation:k_c_3_50 72000ms linear infinite}
 #c_3_51:hover ~ #t_c_3_51{opacity:1;visibility:visible}
-@keyframes k_c_3_51{0.00%{fill:var(--c0);transform:scale(1)}43.31%{fill:var(--c0);transform:scale(1)}43.32%{fill:#c084fc;transform:scale(1.25)}43.56%{fill:#c084fc;transform:scale(1.25)}43.58%{fill:#a855f7;transform:scale(0.92)}43.82%{fill:#a855f7;transform:scale(0.92)}43.83%{fill:#9333ea;transform:scale(0.74)}44.07%{fill:#9333ea;transform:scale(0.74)}44.08%{fill:#7e22ce;transform:scale(0.54)}44.32%{fill:#7e22ce;transform:scale(0.54)}44.33%{fill:#6b21a8;transform:scale(0.36)}44.57%{fill:#6b21a8;transform:scale(0.36)}44.58%{fill:var(--c0);transform:scale(1)}100%{fill:var(--c0);transform:scale(1)}}
+@keyframes k_c_3_51{0.00%{fill:var(--c1);transform:scale(1)}43.31%{fill:var(--c1);transform:scale(1)}43.32%{fill:#c084fc;transform:scale(1.25)}43.56%{fill:#c084fc;transform:scale(1.25)}43.58%{fill:#a855f7;transform:scale(0.92)}43.82%{fill:#a855f7;transform:scale(0.92)}43.83%{fill:#9333ea;transform:scale(0.74)}44.07%{fill:#9333ea;transform:scale(0.74)}44.08%{fill:#7e22ce;transform:scale(0.54)}44.32%{fill:#7e22ce;transform:scale(0.54)}44.33%{fill:#6b21a8;transform:scale(0.36)}44.57%{fill:#6b21a8;transform:scale(0.36)}44.58%{fill:var(--c0);transform:scale(1)}100%{fill:var(--c0);transform:scale(1)}}
 .c.c_3_51{animation:k_c_3_51 72000ms linear infinite}
 #c_4_0:hover ~ #t_c_4_0{opacity:1;visibility:visible}
 @keyframes k_c_4_0{0.00%{fill:var(--c0);transform:scale(1)}5.03%{fill:var(--c0);transform:scale(1)}5.04%{fill:#c084fc;transform:scale(1.25)}5.28%{fill:#c084fc;transform:scale(1.25)}5.29%{fill:#a855f7;transform:scale(0.92)}5.53%{fill:#a855f7;transform:scale(0.92)}5.54%{fill:#9333ea;transform:scale(0.74)}5.78%{fill:#9333ea;transform:scale(0.74)}5.79%{fill:#7e22ce;transform:scale(0.54)}6.03%{fill:#7e22ce;transform:scale(0.54)}6.05%{fill:#6b21a8;transform:scale(0.36)}6.28%{fill:#6b21a8;transform:scale(0.36)}6.30%{fill:var(--c0);transform:scale(1)}100%{fill:var(--c0);transform:scale(1)}}
@@ -1411,7 +1411,7 @@
 <rect id="c_0_51" class="c c_0_51" x="679" y="32" rx="2" ry="2"><title>3 submissions on Aug 9, 2026</title></rect>
 <rect id="c_1_51" class="c c_1_51" x="679" y="45" rx="2" ry="2"><title>2 submissions on Aug 10, 2026</title></rect>
 <rect id="c_2_51" class="c c_2_51" x="679" y="58" rx="2" ry="2"><title>6 submissions on Aug 11, 2026</title></rect>
-<rect id="c_3_51" class="c c_3_51" x="679" y="71" rx="2" ry="2"><title>No submissions on Aug 12, 2026</title></rect>
+<rect id="c_3_51" class="c c_3_51" x="679" y="71" rx="2" ry="2"><title>3 submissions on Aug 12, 2026</title></rect>
 <rect id="c_4_51" class="c c_4_51" x="679" y="84" rx="2" ry="2"><title>No submissions on Aug 13, 2026</title></rect>
 <rect id="c_5_51" class="c c_5_51" x="679" y="97" rx="2" ry="2"><title>No submissions on Aug 14, 2026</title></rect>
 <rect id="c_6_51" class="c c_6_51" x="679" y="110" rx="2" ry="2"><title>No submissions on Aug 15, 2026</title></rect>
@@ -2858,7 +2858,7 @@
 </g>
 <g id="t_c_3_51" class="tip" transform="translate(533, 41)">
   <rect width="165" height="24" rx="5" fill="#161b22" stroke="#818cf8" stroke-width="1.2"/>
-  <text x="82.5" y="16" text-anchor="middle" fill="#ffffff" font-size="10.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="600">No submissions on Aug 12, 2026</text>
+  <text x="82.5" y="16" text-anchor="middle" fill="#ffffff" font-size="10.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="600">3 submissions on Aug 12, 2026</text>
 </g>
 <g id="t_c_4_51" class="tip" transform="translate(533, 54)">
   <rect width="165" height="24" rx="5" fill="#161b22" stroke="#818cf8" stroke-width="1.2"/>
