@@ -606,7 +606,7 @@
 @keyframes k_c_3_50{0.00%{fill:var(--c1);transform:scale(1)}33.17%{fill:var(--c1);transform:scale(1)}33.18%{fill:#c084fc;transform:scale(1.25)}33.40%{fill:#c084fc;transform:scale(1.25)}33.41%{fill:#a855f7;transform:scale(0.92)}33.62%{fill:#a855f7;transform:scale(0.92)}33.63%{fill:#9333ea;transform:scale(0.74)}33.85%{fill:#9333ea;transform:scale(0.74)}33.86%{fill:#7e22ce;transform:scale(0.54)}34.07%{fill:#7e22ce;transform:scale(0.54)}34.09%{fill:#6b21a8;transform:scale(0.36)}34.30%{fill:#6b21a8;transform:scale(0.36)}34.31%{fill:var(--c0);transform:scale(1)}72.90%{fill:var(--c0);transform:scale(1)}72.91%{fill:#c084fc;transform:scale(1.25)}73.13%{fill:#c084fc;transform:scale(1.25)}73.14%{fill:#a855f7;transform:scale(0.92)}73.35%{fill:#a855f7;transform:scale(0.92)}73.36%{fill:#9333ea;transform:scale(0.74)}73.58%{fill:#9333ea;transform:scale(0.74)}73.59%{fill:#7e22ce;transform:scale(0.54)}73.80%{fill:#7e22ce;transform:scale(0.54)}73.81%{fill:#6b21a8;transform:scale(0.36)}74.03%{fill:#6b21a8;transform:scale(0.36)}74.04%{fill:var(--c0);transform:scale(1)}100%{fill:var(--c0);transform:scale(1)}}
 .c.c_3_50{animation:k_c_3_50 72000ms linear infinite}
 #c_3_51:hover ~ #t_c_3_51{opacity:1;visibility:visible}
-@keyframes k_c_3_51{0.00%{fill:var(--c0);transform:scale(1)}32.95%{fill:var(--c0);transform:scale(1)}32.96%{fill:#c084fc;transform:scale(1.25)}33.17%{fill:#c084fc;transform:scale(1.25)}33.18%{fill:#a855f7;transform:scale(0.92)}33.40%{fill:#a855f7;transform:scale(0.92)}33.41%{fill:#9333ea;transform:scale(0.74)}33.62%{fill:#9333ea;transform:scale(0.74)}33.63%{fill:#7e22ce;transform:scale(0.54)}33.85%{fill:#7e22ce;transform:scale(0.54)}33.86%{fill:#6b21a8;transform:scale(0.36)}34.07%{fill:#6b21a8;transform:scale(0.36)}34.09%{fill:var(--c0);transform:scale(1)}100%{fill:var(--c0);transform:scale(1)}}
+@keyframes k_c_3_51{0.00%{fill:var(--c1);transform:scale(1)}32.95%{fill:var(--c1);transform:scale(1)}32.96%{fill:#c084fc;transform:scale(1.25)}33.17%{fill:#c084fc;transform:scale(1.25)}33.18%{fill:#a855f7;transform:scale(0.92)}33.40%{fill:#a855f7;transform:scale(0.92)}33.41%{fill:#9333ea;transform:scale(0.74)}33.62%{fill:#9333ea;transform:scale(0.74)}33.63%{fill:#7e22ce;transform:scale(0.54)}33.85%{fill:#7e22ce;transform:scale(0.54)}33.86%{fill:#6b21a8;transform:scale(0.36)}34.07%{fill:#6b21a8;transform:scale(0.36)}34.09%{fill:var(--c0);transform:scale(1)}100%{fill:var(--c0);transform:scale(1)}}
 .c.c_3_51{animation:k_c_3_51 72000ms linear infinite}
 #c_4_0:hover ~ #t_c_4_0{opacity:1;visibility:visible}
 .c.c_4_0{fill:var(--c0);transform:scale(1)}
@@ -1422,7 +1422,7 @@
 <rect id="c_0_51" class="c c_0_51" x="679" y="32" rx="2" ry="2"><title>4 submissions on Aug 16, 2026</title></rect>
 <rect id="c_1_51" class="c c_1_51" x="679" y="45" rx="2" ry="2"><title>4 submissions on Aug 17, 2026</title></rect>
 <rect id="c_2_51" class="c c_2_51" x="679" y="58" rx="2" ry="2"><title>5 submissions on Aug 18, 2026</title></rect>
-<rect id="c_3_51" class="c c_3_51" x="679" y="71" rx="2" ry="2"><title>No submissions on Aug 19, 2026</title></rect>
+<rect id="c_3_51" class="c c_3_51" x="679" y="71" rx="2" ry="2"><title>3 submissions on Aug 19, 2026</title></rect>
 <rect id="c_4_51" class="c c_4_51" x="679" y="84" rx="2" ry="2"><title>No submissions on Aug 20, 2026</title></rect>
 <rect id="c_5_51" class="c c_5_51" x="679" y="97" rx="2" ry="2"><title>No submissions on Aug 21, 2026</title></rect>
 <rect id="c_6_51" class="c c_6_51" x="679" y="110" rx="2" ry="2"><title>No submissions on Aug 22, 2026</title></rect>
@@ -2869,7 +2869,7 @@
 </g>
 <g id="t_c_3_51" class="tip" transform="translate(533, 41)">
   <rect width="165" height="24" rx="5" fill="#161b22" stroke="#818cf8" stroke-width="1.2"/>
-  <text x="82.5" y="16" text-anchor="middle" fill="#ffffff" font-size="10.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="600">No submissions on Aug 19, 2026</text>
+  <text x="82.5" y="16" text-anchor="middle" fill="#ffffff" font-size="10.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="600">3 submissions on Aug 19, 2026</text>
 </g>
 <g id="t_c_4_51" class="tip" transform="translate(533, 54)">
   <rect width="165" height="24" rx="5" fill="#161b22" stroke="#818cf8" stroke-width="1.2"/>
