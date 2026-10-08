@@ -14,7 +14,7 @@
       <rect width="490" height="195" rx="8" fill="#0d1117" stroke="#1f2937" stroke-width="1.5"/>
 
       <!-- Left Column (Submissions) -->
-      <text x="90" y="95" class="title">1,734</text>
+      <text x="90" y="95" class="title">1,740</text>
       <text x="90" y="125" class="label">Total Submissions</text>
       <text x="90" y="148" class="sublabel">Active Days: 314</text>
 
@@ -34,7 +34,7 @@
 
       <text x="245" y="91" class="rating-val">1734</text>
       <text x="245" y="125" class="label">Contest Rating</text>
-      <text x="245" y="148" class="sublabel-highlight">Top 11.73%</text>
+      <text x="245" y="148" class="sublabel-highlight">Top 11.75%</text>
 
       <!-- Right Column (Badges) -->
       <text x="400" y="95" class="title">6</text>
