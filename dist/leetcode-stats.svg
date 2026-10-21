@@ -16,7 +16,7 @@
       <!-- Left Column (Submissions) -->
       <text x="90" y="95" class="title">1,764</text>
       <text x="90" y="125" class="label">Total Submissions</text>
-      <text x="90" y="148" class="sublabel">Active Days: 317</text>
+      <text x="90" y="148" class="sublabel">Active Days: 316</text>
 
       <!-- Column Separators -->
       <line x1="172" y1="35" x2="172" y2="160" class="separator" stroke-linecap="round" />
