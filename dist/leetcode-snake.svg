@@ -464,7 +464,7 @@
 @keyframes k_c_2_50{0.00%{fill:var(--c3);transform:scale(1)}27.50%{fill:var(--c3);transform:scale(1)}27.51%{fill:#c084fc;transform:scale(1.25)}27.72%{fill:#c084fc;transform:scale(1.25)}27.73%{fill:#a855f7;transform:scale(0.92)}27.94%{fill:#a855f7;transform:scale(0.92)}27.95%{fill:#9333ea;transform:scale(0.74)}28.16%{fill:#9333ea;transform:scale(0.74)}28.17%{fill:#7e22ce;transform:scale(0.54)}28.37%{fill:#7e22ce;transform:scale(0.54)}28.38%{fill:#6b21a8;transform:scale(0.36)}28.59%{fill:#6b21a8;transform:scale(0.36)}28.60%{fill:var(--c0);transform:scale(1)}100%{fill:var(--c0);transform:scale(1)}}
 .c.c_2_50{animation:k_c_2_50 72000ms linear infinite}
 #c_2_51:hover ~ #t_c_2_51{opacity:1;visibility:visible}
-@keyframes k_c_2_51{0.00%{fill:var(--c0);transform:scale(1)}27.28%{fill:var(--c0);transform:scale(1)}27.29%{fill:#c084fc;transform:scale(1.25)}27.50%{fill:#c084fc;transform:scale(1.25)}27.51%{fill:#a855f7;transform:scale(0.92)}27.72%{fill:#a855f7;transform:scale(0.92)}27.73%{fill:#9333ea;transform:scale(0.74)}27.94%{fill:#9333ea;transform:scale(0.74)}27.95%{fill:#7e22ce;transform:scale(0.54)}28.16%{fill:#7e22ce;transform:scale(0.54)}28.17%{fill:#6b21a8;transform:scale(0.36)}28.37%{fill:#6b21a8;transform:scale(0.36)}28.38%{fill:var(--c0);transform:scale(1)}100%{fill:var(--c0);transform:scale(1)}}
+@keyframes k_c_2_51{0.00%{fill:var(--c1);transform:scale(1)}27.28%{fill:var(--c1);transform:scale(1)}27.29%{fill:#c084fc;transform:scale(1.25)}27.50%{fill:#c084fc;transform:scale(1.25)}27.51%{fill:#a855f7;transform:scale(0.92)}27.72%{fill:#a855f7;transform:scale(0.92)}27.73%{fill:#9333ea;transform:scale(0.74)}27.94%{fill:#9333ea;transform:scale(0.74)}27.95%{fill:#7e22ce;transform:scale(0.54)}28.16%{fill:#7e22ce;transform:scale(0.54)}28.17%{fill:#6b21a8;transform:scale(0.36)}28.37%{fill:#6b21a8;transform:scale(0.36)}28.38%{fill:var(--c0);transform:scale(1)}100%{fill:var(--c0);transform:scale(1)}}
 .c.c_2_51{animation:k_c_2_51 72000ms linear infinite}
 #c_3_0:hover ~ #t_c_3_0{opacity:1;visibility:visible}
 @keyframes k_c_3_0{0.00%{fill:var(--c1);transform:scale(1)}2.39%{fill:var(--c1);transform:scale(1)}2.40%{fill:#c084fc;transform:scale(1.25)}2.61%{fill:#c084fc;transform:scale(1.25)}2.62%{fill:#a855f7;transform:scale(0.92)}2.83%{fill:#a855f7;transform:scale(0.92)}2.84%{fill:#9333ea;transform:scale(0.74)}3.05%{fill:#9333ea;transform:scale(0.74)}3.06%{fill:#7e22ce;transform:scale(0.54)}3.26%{fill:#7e22ce;transform:scale(0.54)}3.28%{fill:#6b21a8;transform:scale(0.36)}3.48%{fill:#6b21a8;transform:scale(0.36)}3.49%{fill:var(--c0);transform:scale(1)}86.67%{fill:var(--c0);transform:scale(1)}86.68%{fill:#c084fc;transform:scale(1.25)}86.89%{fill:#c084fc;transform:scale(1.25)}86.90%{fill:#a855f7;transform:scale(0.92)}87.11%{fill:#a855f7;transform:scale(0.92)}87.12%{fill:#9333ea;transform:scale(0.74)}87.33%{fill:#9333ea;transform:scale(0.74)}87.34%{fill:#7e22ce;transform:scale(0.54)}87.54%{fill:#7e22ce;transform:scale(0.54)}87.55%{fill:#6b21a8;transform:scale(0.36)}87.76%{fill:#6b21a8;transform:scale(0.36)}87.77%{fill:var(--c0);transform:scale(1)}100%{fill:var(--c0);transform:scale(1)}}
@@ -1436,7 +1436,7 @@
 <rect id="c_6_50" class="c c_6_50" x="666" y="110" rx="2" ry="2"><title>No submissions on Oct 24, 2026</title></rect>
 <rect id="c_0_51" class="c c_0_51" x="679" y="32" rx="2" ry="2"><title>2 submissions on Oct 25, 2026</title></rect>
 <rect id="c_1_51" class="c c_1_51" x="679" y="45" rx="2" ry="2"><title>2 submissions on Oct 26, 2026</title></rect>
-<rect id="c_2_51" class="c c_2_51" x="679" y="58" rx="2" ry="2"><title>No submissions on Oct 27, 2026</title></rect>
+<rect id="c_2_51" class="c c_2_51" x="679" y="58" rx="2" ry="2"><title>1 submission on Oct 27, 2026</title></rect>
 <rect id="c_3_51" class="c c_3_51" x="679" y="71" rx="2" ry="2"><title>No submissions on Oct 28, 2026</title></rect>
 <rect id="c_4_51" class="c c_4_51" x="679" y="84" rx="2" ry="2"><title>No submissions on Oct 29, 2026</title></rect>
 <rect id="c_5_51" class="c c_5_51" x="679" y="97" rx="2" ry="2"><title>No submissions on Oct 30, 2026</title></rect>
@@ -2880,7 +2880,7 @@
 </g>
 <g id="t_c_2_51" class="tip" transform="translate(533, 75)">
   <rect width="165" height="24" rx="5" fill="#161b22" stroke="#818cf8" stroke-width="1.2"/>
-  <text x="82.5" y="16" text-anchor="middle" fill="#ffffff" font-size="10.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="600">No submissions on Oct 27, 2026</text>
+  <text x="82.5" y="16" text-anchor="middle" fill="#ffffff" font-size="10.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="600">1 submission on Oct 27, 2026</text>
 </g>
 <g id="t_c_3_51" class="tip" transform="translate(533, 41)">
   <rect width="165" height="24" rx="5" fill="#161b22" stroke="#818cf8" stroke-width="1.2"/>
