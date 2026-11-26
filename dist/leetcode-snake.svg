@@ -614,7 +614,7 @@
 @keyframes k_c_3_50{0.00%{fill:var(--c2);transform:scale(1)}63.33%{fill:var(--c2);transform:scale(1)}63.34%{fill:#c084fc;transform:scale(1.25)}63.56%{fill:#c084fc;transform:scale(1.25)}63.57%{fill:#a855f7;transform:scale(0.92)}63.79%{fill:#a855f7;transform:scale(0.92)}63.81%{fill:#9333ea;transform:scale(0.74)}64.03%{fill:#9333ea;transform:scale(0.74)}64.04%{fill:#7e22ce;transform:scale(0.54)}64.26%{fill:#7e22ce;transform:scale(0.54)}64.27%{fill:#6b21a8;transform:scale(0.36)}64.49%{fill:#6b21a8;transform:scale(0.36)}64.50%{fill:var(--c0);transform:scale(1)}80.96%{fill:var(--c0);transform:scale(1)}80.97%{fill:#c084fc;transform:scale(1.25)}81.19%{fill:#c084fc;transform:scale(1.25)}81.21%{fill:#a855f7;transform:scale(0.92)}81.43%{fill:#a855f7;transform:scale(0.92)}81.44%{fill:#9333ea;transform:scale(0.74)}81.66%{fill:#9333ea;transform:scale(0.74)}81.67%{fill:#7e22ce;transform:scale(0.54)}81.89%{fill:#7e22ce;transform:scale(0.54)}81.90%{fill:#6b21a8;transform:scale(0.36)}82.12%{fill:#6b21a8;transform:scale(0.36)}82.13%{fill:var(--c0);transform:scale(1)}100%{fill:var(--c0);transform:scale(1)}}
 .c.c_3_50{animation:k_c_3_50 72000ms linear infinite}
 #c_3_51:hover ~ #t_c_3_51{opacity:1;visibility:visible}
-@keyframes k_c_3_51{0.00%{fill:var(--c0);transform:scale(1)}63.10%{fill:var(--c0);transform:scale(1)}63.11%{fill:#c084fc;transform:scale(1.25)}63.33%{fill:#c084fc;transform:scale(1.25)}63.34%{fill:#a855f7;transform:scale(0.92)}63.56%{fill:#a855f7;transform:scale(0.92)}63.57%{fill:#9333ea;transform:scale(0.74)}63.79%{fill:#9333ea;transform:scale(0.74)}63.81%{fill:#7e22ce;transform:scale(0.54)}64.03%{fill:#7e22ce;transform:scale(0.54)}64.04%{fill:#6b21a8;transform:scale(0.36)}64.26%{fill:#6b21a8;transform:scale(0.36)}64.27%{fill:var(--c0);transform:scale(1)}100%{fill:var(--c0);transform:scale(1)}}
+@keyframes k_c_3_51{0.00%{fill:var(--c2);transform:scale(1)}63.10%{fill:var(--c2);transform:scale(1)}63.11%{fill:#c084fc;transform:scale(1.25)}63.33%{fill:#c084fc;transform:scale(1.25)}63.34%{fill:#a855f7;transform:scale(0.92)}63.56%{fill:#a855f7;transform:scale(0.92)}63.57%{fill:#9333ea;transform:scale(0.74)}63.79%{fill:#9333ea;transform:scale(0.74)}63.81%{fill:#7e22ce;transform:scale(0.54)}64.03%{fill:#7e22ce;transform:scale(0.54)}64.04%{fill:#6b21a8;transform:scale(0.36)}64.26%{fill:#6b21a8;transform:scale(0.36)}64.27%{fill:var(--c0);transform:scale(1)}100%{fill:var(--c0);transform:scale(1)}}
 .c.c_3_51{animation:k_c_3_51 72000ms linear infinite}
 #c_4_0:hover ~ #t_c_4_0{opacity:1;visibility:visible}
 .c.c_4_0{fill:var(--c0);transform:scale(1)}
@@ -1433,7 +1433,7 @@
 <rect id="c_0_51" class="c c_0_51" x="679" y="32" rx="2" ry="2"><title>2 submissions on Nov 22, 2026</title></rect>
 <rect id="c_1_51" class="c c_1_51" x="679" y="45" rx="2" ry="2"><title>1 submission on Nov 23, 2026</title></rect>
 <rect id="c_2_51" class="c c_2_51" x="679" y="58" rx="2" ry="2"><title>1 submission on Nov 24, 2026</title></rect>
-<rect id="c_3_51" class="c c_3_51" x="679" y="71" rx="2" ry="2"><title>No submissions on Nov 25, 2026</title></rect>
+<rect id="c_3_51" class="c c_3_51" x="679" y="71" rx="2" ry="2"><title>4 submissions on Nov 25, 2026</title></rect>
 <rect id="c_4_51" class="c c_4_51" x="679" y="84" rx="2" ry="2"><title>No submissions on Nov 26, 2026</title></rect>
 <rect id="c_5_51" class="c c_5_51" x="679" y="97" rx="2" ry="2"><title>No submissions on Nov 27, 2026</title></rect>
 <rect id="c_6_51" class="c c_6_51" x="679" y="110" rx="2" ry="2"><title>No submissions on Nov 28, 2026</title></rect>
@@ -2880,7 +2880,7 @@
 </g>
 <g id="t_c_3_51" class="tip" transform="translate(533, 41)">
   <rect width="165" height="24" rx="5" fill="#161b22" stroke="#818cf8" stroke-width="1.2"/>
-  <text x="82.5" y="16" text-anchor="middle" fill="#ffffff" font-size="10.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="600">No submissions on Nov 25, 2026</text>
+  <text x="82.5" y="16" text-anchor="middle" fill="#ffffff" font-size="10.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="600">4 submissions on Nov 25, 2026</text>
 </g>
 <g id="t_c_4_51" class="tip" transform="translate(533, 54)">
   <rect width="165" height="24" rx="5" fill="#161b22" stroke="#818cf8" stroke-width="1.2"/>
